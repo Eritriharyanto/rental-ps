@@ -1,0 +1,19 @@
+{
+    "name": "admin/backend",
+    "autoload": {
+        "psr-4": {
+            "Admin\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Eritriharyanto",
+            "email": "wildyoung737@gmail.com"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^2.2",
+        "firebase/php-jwt": "^7.0",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

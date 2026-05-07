@@ -1,0 +1,5 @@
+// backend
+composer init
+composer require mongodb/mongodb
+composer require firebase/php-jwt
+composer require vlucas/phpdotenv
