@@ -3,3 +3,10 @@ composer init
 composer require mongodb/mongodb
 composer require firebase/php-jwt
 composer require vlucas/phpdotenv
+
+// frontend
+npm create vite@latest
+npm install tailwindcss
+npm install -D tailwindcss@3.4.3 postcss autoprefixer
+node_modules\.bin\tailwindcss init -p
+npm install react-router-dom axios lucide-react
