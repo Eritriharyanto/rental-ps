@@ -7,6 +7,8 @@ import {
 import LoginAdmin from "./pages/admin/Login";
 import Register from "./pages/admin/Register";
 import AdminLayout from "./layouts/AdminLayout";
+import KelolaUits from "./pages/admin/Units";
+import Dashboard from "./pages/admin/Dasboard";
 
 // Komponen Halaman Sementara
 const Dashboard = () => (
