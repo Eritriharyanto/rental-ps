@@ -1,12 +1,20 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: POST");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once '../config/db.php';
 
 // Ambil input JSON dari Frontend
 $data = json_decode(file_get_contents("php://input"));
+
+
 
 if (!empty($data->username) && !empty($data->password) && !empty($data->nama)) {
     $collection = $db->admin;

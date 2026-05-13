@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost/rental-ps/Frontend/api", // Sesuaikan dengan path folder PHP kamu
+  baseURL: "http://localhost/rental-ps/Backend/api", // Sesuaikan dengan path folder PHP kamu
 });
 
 // Otomatis tempelkan token JWT jika ada di localStorage

@@ -18,13 +18,23 @@ const Register = () => {
     setError("");
     setSuccess("");
 
+    console.log(formData);
+
     try {
-      const response = await api.post("/register.php", formData);
-      if (response.data.dtdtus === "success") {
-        setSuccess("Register BErhasil Silahkan Login");
+      const response = await api.post("/register.php", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(response.data);
+
+      if (response.data.status === "success") {
+        setSuccess("Register Berhasil. Silahkan Login");
         setTimeout(() => navigate("/admin/login"), 2000);
       }
     } catch (err) {
+      console.log(err.response?.data);
       setError(err.response?.data?.message || "Register Gagal");
     }
   };

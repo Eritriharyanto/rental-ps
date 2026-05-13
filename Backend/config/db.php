@@ -20,14 +20,18 @@ try {
 
     // Tes koneksi (Ping)
     $client->selectDatabase('admin')->command(['ping' => 1]);
-
-    echo "<h1>HORE! KONEKSI BERHASIL!</h1>";
-    echo "Terhubung ke database: <strong>" . $dbName . "</strong>";
     
     // Set database utama
     $db = $client->selectDatabase($dbName); 
 
-} catch (Exception $e) {
-    echo "<h1>YAHHH! PIPA BOCOR!</h1>";
-    echo "Error: " . $e->getMessage();
+}  catch (Exception $e) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        "status" => "error",
+        "message" => $e->getMessage()
+    ]);
+
+    exit();
 }

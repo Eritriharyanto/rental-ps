@@ -8,18 +8,33 @@ const LoginAdmin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    console.log("Tombol login diklik");
+
     try {
-      const response = await apipost("/Login.php", { username, password });
+      const response = await api.post("/login.php", {
+        username,
+        password,
+      });
+
+      console.log(response.data);
+
       if (response.data.status === "success") {
-        // simpan ke Localstorage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", "admin");
-        navigate("/admin/dashboard"); // Pindah ke Dasboard
+
+        navigate("/admin/dashboard");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login Gagal");
+      console.log(err);
+      console.log(err.response);
+      console.log(err.response?.data);
+
+      setError(err.response?.data?.message || err.message || "Login Gagal");
     }
   };
 
