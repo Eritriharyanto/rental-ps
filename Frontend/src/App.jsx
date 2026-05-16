@@ -8,11 +8,7 @@ import LoginAdmin from "./pages/admin/Login";
 import Register from "./pages/admin/Register";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
-
-// Komponen sementara
-const KelolaUnits = () => (
-  <div className='text-white'>Tabel CRUD Unit PS di sini...</div>
-);
+import Units from "./pages/admin/Units";
 
 function App() {
   return (
@@ -23,7 +19,7 @@ function App() {
 
         <Route path='/admin' element={<AdminLayout />}>
           <Route path='dashboard' element={<Dashboard />} />
-          <Route path='units' element={<KelolaUnits />} />
+          <Route path='units' element={<Units />} />
         </Route>
 
         <Route path='/' element={<Navigate to='/admin/login' />} />

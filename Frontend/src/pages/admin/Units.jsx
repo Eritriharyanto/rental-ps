@@ -30,7 +30,7 @@ const KelolaUnits = () => {
 
   // Fungsi untuk buka modal edit (Auto-fill form)
   const openEditModal = (unit) => {
-    setEditId(unit._id);
+    setEditId(unit._id.$oid || unit._id);
     setFormData({
       nama_unit: unit.nama_unit,
       jenis: unit.jenis,
@@ -44,22 +44,29 @@ const KelolaUnits = () => {
   // Fungsi simpan (Bisa Create atau Update)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("FORM SUBMIT");
+    console.log(formData);
+
     try {
       let response;
+
       if (editId) {
-        // Jika ada editId, panggil API Update
         response = await api.put("/units/update.php", {
           ...formData,
           id: editId,
         });
       } else {
-        // Jika tidak ada, panggil API Create
+        console.log(localStorage.getItem("token"));
         response = await api.post("/units/create.php", formData);
       }
+
+      console.log("RESPONSE:", response.data);
 
       if (response.data.status === "success") {
         setIsModalOpen(false);
         setEditId(null);
+
         setFormData({
           nama_unit: "",
           jenis: "Console",
@@ -67,9 +74,13 @@ const KelolaUnits = () => {
           status: "tersedia",
           deskripsi: "",
         });
+
         fetchUnits();
       }
     } catch (err) {
+      console.log(err);
+      console.log(err.response);
+
       alert(err.response?.data?.message || "Gagal memproses data");
     }
   };
@@ -79,8 +90,13 @@ const KelolaUnits = () => {
     if (window.confirm(`Apakah kamu yakin ingin menghapus unit "${nama}"?`)) {
       try {
         const response = await api.delete(`/units/delete.php?id=${id}`);
+
         if (response.data.status === "success") {
-          fetchUnits();
+          // Hapus data langsung dari state
+          setUnits((prevUnits) =>
+            prevUnits.filter((unit) => (unit._id.$oid || unit._id) !== id),
+          );
+
           alert("Unit berhasil dihapus");
         }
       } catch (err) {
@@ -138,7 +154,10 @@ const KelolaUnits = () => {
               </tr>
             ) : (
               units.map((unit) => (
-                <tr key={unit._id} className='hover:bg-slate-700/30 transition'>
+                <tr
+                  key={unit._id.$oid}
+                  className='hover:bg-slate-700/30 transition'
+                >
                   <td className='p-4 font-medium'>{unit.nama_unit}</td>
                   <td className='p-4 text-slate-400'>{unit.jenis}</td>
                   <td className='p-4 text-emerald-400'>
@@ -165,7 +184,9 @@ const KelolaUnits = () => {
                       <Edit size={18} />
                     </button>
                     <button
-                      onClick={() => handleDelete(unit._id, unit.nama_unit)}
+                      onClick={() =>
+                        handleDelete(unit._id.$oid || unit._id, unit.nama_unit)
+                      }
                       className='text-red-400 hover:text-red-300'
                     >
                       <Trash2 size={18} />
